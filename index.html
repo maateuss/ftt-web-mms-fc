@@ -1,12 +1,106 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
+    <meta http-equiv=”Content-Type” content=”text/html; charset=utf-8″/>
+<title>Financial Calc</title>
+    <script src="jquery-3.4.1.min.js"></script>
 </head>
 <body>
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
+<h1>Financial Calculator</h1>
+<p>Simple app for big rich investors.</p>
+<div class="row">
 
+    pv: <input type="number" id="pvInput"/>
+    pmt: <input type="number" id="pmtInput"/>
+    i: <input type="number" id="iInput"/>
+    n: <input type="number" id="nInput"/>
+    <button onclick="myFunction()">Calcular</button>
+</div>
+<div>
+<table style="width: fit-content;" id="resultsTable">
+<tr>
+    <th>Data</th>
+    <th>Montante Inicial</th>
+    <th>Variação</th>
+    <th>Valor Final</th>
+</tr>
+
+</table>
+
+</div>
+<script>
+    function myFunction() {
+        var pv = createFloat($("#pvInput").val());
+        if(pv === false){
+            alert("Valor de PV inválido!");
+            return;
+        }
+        var pmt = createFloat($("#pmtInput").val());
+        if(pmt === false){
+            alert("Valor de PMT inválido!");
+            return;
+        }
+        var i = createFloat($("#iInput").val());
+        if(i === false){
+            alert("Valor de I inválido!");
+            return;
+        }
+        var n = createInt($("#nInput").val());
+        if(n === false){
+            alert("Valor de N inválido!");
+            return;
+        }
+
+        $("#resultsTable td").remove()
+         $("#pvInput").val("");
+         $("#pmtInput").val("");
+         $("#iInput").val("");
+         $("#nInput").val("");
+
+        for (var index = 0; index < n; index++){
+            var date = new Date()
+            date.setMonth(date.getMonth() + index);
+            date = formattedDate(date);
+            var currentPv = createFloat(pv);
+            var aux = (pv*(i/100));
+            pv = createFloat((currentPv+aux));
+            var valFinal = (pv + aux + pmt);
+            addrow(date, currentPv.toFixed(2), aux.toFixed(2), valFinal.toFixed(2));
+        }
+
+    }
+
+    function formattedDate(defaultDate){
+        var date = defaultDate.getDate()+'/'+(defaultDate.getMonth()+1)+'/'+defaultDate.getFullYear();
+        return date;
+    }
+
+
+    function createFloat(text){
+        try{
+            return parseFloat(text);
+        }catch (error){
+            return false;
+        }
+    }
+
+    function createInt(text){
+        try{
+            return parseInt(text);
+        }catch(error){
+            return false;
+        }
+    }
+
+    function addrow(Data, MontanteInicial, Variacao, ValorFinal) { 
+                markup = "<tr><td>" + Data 
+                    +"</td><td>"+MontanteInicial
+                    +"$ </td><td>"+Variacao
+                    +"Δ$ </td><td>"+ValorFinal
+                    + "$ </td></tr>"; 
+                $("#resultsTable").append(markup); 
+            }
+    </script>
 </body>
 </html>
