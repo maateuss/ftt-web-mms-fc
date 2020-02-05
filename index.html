@@ -1,40 +1,81 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="bootstrap.css"> 
+    <link rel="stylesheet" href="style.css"> 
     <meta http-equiv=”Content-Type” content=”text/html; charset=utf-8″/>
 <title>Financial Calc</title>
     <script src="jquery-3.4.1.min.js"></script>
 </head>
 <body>
 
-<h1>Financial Calculator</h1>
-<p>Simple app for big rich investors.</p>
+    <div class="container">
+        <h1>Calculadora</h1>
+    </div>
+    
+    <div class="container">
+        <p>Calculadora top.</p>
+        
 <div class="row">
 
-    pv: <input type="number" id="pvInput"/>
-    pmt: <input type="number" id="pmtInput"/>
-    i: <input type="number" id="iInput"/>
-    n: <input type="number" id="nInput"/>
-    <button onclick="myFunction()">Calcular</button>
-</div>
-<div>
-<table style="width: fit-content;" id="resultsTable">
-<tr>
-    <th>Data</th>
-    <th>Montante Inicial</th>
-    <th>Variação</th>
-    <th>Valor Final</th>
-</tr>
+    <div class="input-group mb-3 mx-auto col">
+        <div class="input-group-prepend">
+          <span class="input-group-text">inicial</span>
+        </div>
+        <input type="number" class="form-control" id="pvInput" aria-label="Pv (to the nearest dollar)">
+        <div class="input-group-append">
+          <span class="input-group-text">$</span>
+        </div>
+      </div>
 
-</table>
+      <div class="input-group mb-3 mx-auto col">
+        <div class="input-group-prepend">
+          <span class="input-group-text">mensal</span>
+        </div>
+        <input type="number" class="form-control" id="pmtInput" aria-label="Pv (to the nearest dollar)">
+        <div class="input-group-append">
+          <span class="input-group-text">$</span>
+        </div>
+      </div>
 
+      <div class="input-group mb-3 mx-auto col">
+        <div class="input-group-prepend">
+          <span class="input-group-text">taxa</span>
+        </div>
+        <input type="number" class="form-control" id="iInput" aria-label="Pv (to the nearest dollar)">
+        <div class="input-group-append">
+          <span class="input-group-text">%</span>
+        </div>
+      </div>
+
+      <div class="input-group mb-3 mx-auto col">
+        <div class="input-group-prepend">
+          <span class="input-group-text">meses</span>
+        </div>
+        <input type="number" class="form-control" id="nInput" aria-label="Pv (to the nearest dollar)">
+      </div>
+
+    <button onclick="myFunction()" class="btn btn-danger">Calcular</button>
 </div>
-<script>
-    function myFunction() {
-        var pv = createFloat($("#pvInput").val());
-        if(pv === false){
-            alert("Valor de PV inválido!");
-            return;
+</div>
+    <div class="container">
+        <table class="table table-striped" style="width: fit-content; margin-top: 5px;" id="resultsTable">
+            <tr>
+                <th>Data</th>
+                <th>Montante Inicial</th>
+                <th>Variação</th>
+                <th>Valor Final</th>
+            </tr>
+            
+        </table>
+        
+    </div>
+    <script>
+        function myFunction() {
+            var pv = createFloat($("#pvInput").val());
+            if(pv === false){
+                alert("Valor de PV inválido!");
+                return;
         }
         var pmt = createFloat($("#pmtInput").val());
         if(pmt === false){
